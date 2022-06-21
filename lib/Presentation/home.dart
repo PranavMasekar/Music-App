@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_app/Presentation/errorpage.dart';
 
 import '../BLoC/connectivity bloc/connection_bloc.dart';
+import 'songs_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -9,11 +11,12 @@ class HomeScreen extends StatelessWidget {
     return Center(
       child: BlocBuilder<NetworkBloc, NetworkState>(
         builder: (context, state) {
-          if (state is ConnectionFailure) return Text("No Internet Connection");
+          if (state is ConnectionFailure)
+            return ErrorPage(errorMessage: "No Internet Connection");
           if (state is ConnectionSuccess)
-            return Text("You're Connected to Internet");
+            return SongsScreen();
           else
-            return Text("Not Connected To Internet");
+            return ErrorPage(errorMessage: "Something Went Wrong");
         },
       ),
     );

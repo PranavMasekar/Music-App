@@ -18,7 +18,7 @@ class SongRepository {
     return songs;
   }
 
-  Future<Song?> getSong(String id) async {
+  Future<Song?> getSong(int id) async {
     Song song;
     Response? response = await _service.getSong(id);
     if (response == null) return null;
@@ -27,7 +27,7 @@ class SongRepository {
     return song;
   }
 
-  Future<Lyrics?> getLyrics(String id) async {
+  Future<Lyrics?> getLyrics(int id) async {
     Lyrics lyric;
     Response? response = await _service.getLyrics(id);
     if (response == null) return null;

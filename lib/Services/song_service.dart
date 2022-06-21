@@ -19,7 +19,7 @@ class SongService {
     }
   }
 
-  Future getSong(String id) async {
+  Future getSong(int id) async {
     try {
       String url =
           "https://api.musixmatch.com/ws/1.1/track.get?track_id=$id&apikey=8dbbbf65ba63d8e5278851222fc09948";
@@ -30,7 +30,7 @@ class SongService {
     }
   }
 
-  Future getLyrics(String id) async {
+  Future getLyrics(int id) async {
     try {
       String url =
           " https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=$id&apikey=8dbbbf65ba63d8e5278851222fc09948";
