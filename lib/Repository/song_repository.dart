@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:music_app/Models/lyrics_model.dart';
 import '../Services/song_service.dart';
 
 import '../Models/song_model.dart';
@@ -15,5 +16,23 @@ class SongRepository {
       songs.add(Song.fromJson(element));
     }
     return songs;
+  }
+
+  Future<Song?> getSong(String id) async {
+    Song song;
+    Response? response = await _service.getSong(id);
+    if (response == null) return null;
+    Map<String, dynamic> res = response.data;
+    song = Song.fromJson(res["track"]);
+    return song;
+  }
+
+  Future<Lyrics?> getLyrics(String id) async {
+    Lyrics lyric;
+    Response? response = await _service.getLyrics(id);
+    if (response == null) return null;
+    Map<String, dynamic> res = response.data;
+    lyric = Lyrics.fromJson(res["lyrics"]);
+    return lyric;
   }
 }
