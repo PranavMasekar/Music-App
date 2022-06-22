@@ -11,12 +11,10 @@ class HomeScreen extends StatelessWidget {
     return Center(
       child: BlocBuilder<NetworkBloc, NetworkState>(
         builder: (context, state) {
-          if (state is ConnectionFailure)
-            return ErrorPage(errorMessage: "No Internet Connection");
           if (state is ConnectionSuccess)
             return SongsScreen();
           else
-            return ErrorPage(errorMessage: "Something Went Wrong");
+            return ErrorPage(errorMessage: "No Internet Connection");
         },
       ),
     );

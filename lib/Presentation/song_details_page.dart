@@ -34,11 +34,41 @@ class SongDetails extends StatelessWidget {
             builder: ((context) {
               return BlocBuilder<SongDetailsBloc, SongDetailsState>(
                 builder: (context, state) {
-                  if (state is SongDetailsLoadedState) {
-                    return Text(state.lyric!.lyrics);
-                  }
                   if (state is SongDetailsLoading) {
                     return Center(child: CircularProgressIndicator());
+                  }
+                  if (state is SongDetailsLoadedState) {
+                    return SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/music.png",
+                              height: 250,
+                              width: 250,
+                            ),
+                            Text(
+                              state.song!.songName,
+                              style: TextStyle(fontSize: 24),
+                            ),
+                            Text(
+                              "by ${state.song!.artistName}",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              "Lyrics",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            SizedBox(height: 20),
+                            Text(state.lyric!.lyrics),
+                          ],
+                        ),
+                      ),
+                    );
                   }
                   return ErrorPage(errorMessage: "Something Went Wrong");
                 },
