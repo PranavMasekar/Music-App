@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:music_app/Models/lyrics_model.dart';
 import '../Services/song_service.dart';
@@ -11,7 +13,7 @@ class SongRepository {
     List<Song> songs = [];
     Response? response = await _service.getSongs();
     if (response == null) return [];
-    Map<String, dynamic> res = response.data;
+    Map<String, dynamic> res = jsonDecode(response.data);
     for (var element in res["track_list"]) {
       songs.add(Song.fromJson(element));
     }

@@ -11,7 +11,7 @@ class ErrorPage extends StatelessWidget {
         title: Text("Music App"),
       ),
       body: Center(
-        child: Text("Error Message "),
+        child: Text(errorMessage),
       ),
     );
   }
