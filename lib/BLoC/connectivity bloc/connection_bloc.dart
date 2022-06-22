@@ -8,23 +8,25 @@ part 'connection_event.dart';
 part 'connection_state.dart';
 
 class NetworkBloc extends Bloc<NetworkEvent, NetworkState> {
-  NetworkBloc() : super(ConnectionInitial());
-  late StreamSubscription _subscription;
+  StreamSubscription? subscription;
+  NetworkBloc() : super(ConnectionInitial()) {
+    on<OnConnectedEvent>((event, emit) => emit(ConnectionSuccess()));
+    on<OnNotConnectedEvent>((event, emit) => emit(ConnectionFailure()));
 
-  Stream<NetworkState> mapEventToState(NetworkEvent event) async* {
-    if (event is ListenConnection) {
-      _subscription = Connectivity().onConnectivityChanged.listen((status) {
-        add(ConnectionChanged(status == ConnectivityResult.none
-            ? ConnectionFailure()
-            : ConnectionSuccess()));
-      });
-    }
-    if (event is ConnectionChanged) yield event.connection;
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.mobile ||
+          result == ConnectivityResult.wifi) {
+        add(OnConnectedEvent());
+      } else {
+        add(OnNotConnectedEvent());
+      }
+    });
   }
-
   @override
   Future<void> close() {
-    _subscription.cancel();
+    subscription?.cancel();
     return super.close();
   }
 }

@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         body: MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: ((context) => NetworkBloc()..add(ListenConnection())),
+              create: ((context) => NetworkBloc()),
             ),
             BlocProvider(
               create: ((context) => SongBloc()..add(GetSongs(songs: []))),
