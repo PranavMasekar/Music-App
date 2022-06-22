@@ -29,6 +29,7 @@ class SongDetails extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: Text("Music App"),
+            backgroundColor: Colors.teal.withOpacity(0.5),
           ),
           body: Builder(
             builder: ((context) {
@@ -46,9 +47,7 @@ class SongDetails extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset(
-                              "assets/images/music.png",
-                              height: 250,
-                              width: 250,
+                              "assets/images/play.jpg",
                             ),
                             Text(
                               state.song!.songName,
@@ -69,8 +68,8 @@ class SongDetails extends StatelessWidget {
                         ),
                       ),
                     );
-                  }
-                  return ErrorPage(errorMessage: "Something Went Wrong");
+                  } else
+                    return ErrorPage(errorMessage: "Something Went Wrong");
                 },
               );
             }),

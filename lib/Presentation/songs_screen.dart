@@ -13,6 +13,7 @@ class SongsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Music App"),
+        backgroundColor: Colors.teal.withOpacity(0.5),
       ),
       body: BlocBuilder<SongBloc, SongState>(
         builder: (context, state) {
