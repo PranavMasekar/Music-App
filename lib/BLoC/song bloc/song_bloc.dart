@@ -39,6 +39,7 @@ class SongBloc extends Bloc<SongEvent, SongState> {
   }
 
   Future<void> _getLyrics(GetLyrics event, Emitter<SongState> emit) async {
+    emit(SongLoadingState());
     Lyrics? lyric;
     lyric = await _repository.getLyrics(event.id);
     if (lyric == null) {

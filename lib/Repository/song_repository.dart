@@ -14,8 +14,8 @@ class SongRepository {
     Response? response = await _service.getSongs();
     if (response == null) return [];
     Map<String, dynamic> res = jsonDecode(response.data);
-    for (var element in res["track_list"]) {
-      songs.add(Song.fromJson(element));
+    for (var element in res["message"]["body"]["track_list"]) {
+      songs.add(Song.fromJson(element["track"]));
     }
     return songs;
   }
@@ -24,8 +24,8 @@ class SongRepository {
     Song song;
     Response? response = await _service.getSong(id);
     if (response == null) return null;
-    Map<String, dynamic> res = response.data;
-    song = Song.fromJson(res["track"]);
+    Map<String, dynamic> res = jsonDecode(response.data);
+    song = Song.fromJson(res["message"]["body"]["track"]);
     return song;
   }
 
@@ -33,8 +33,8 @@ class SongRepository {
     Lyrics lyric;
     Response? response = await _service.getLyrics(id);
     if (response == null) return null;
-    Map<String, dynamic> res = response.data;
-    lyric = Lyrics.fromJson(res["lyrics"]);
+    Map<String, dynamic> res = jsonDecode(response.data);
+    lyric = Lyrics.fromJson(res["message"]["body"]["lyrics"]);
     return lyric;
   }
 }

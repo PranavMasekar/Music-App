@@ -12,19 +12,17 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: ((context) => NetworkBloc()),
-            ),
-            BlocProvider(
-              create: ((context) => SongBloc()..add(GetSongs(songs: []))),
-            ),
-          ],
-          child: HomeScreen(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: ((context) => NetworkBloc()),
         ),
+        BlocProvider(
+          create: ((context) => SongBloc()..add(GetSongs(songs: []))),
+        ),
+      ],
+      child: MaterialApp(
+        home: Scaffold(body: HomeScreen()),
       ),
     );
   }

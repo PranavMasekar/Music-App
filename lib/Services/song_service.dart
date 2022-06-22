@@ -33,11 +33,11 @@ class SongService {
   Future getLyrics(int id) async {
     try {
       String url =
-          " https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=$id&apikey=8dbbbf65ba63d8e5278851222fc09948";
+          "https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=$id&apikey=8dbbbf65ba63d8e5278851222fc09948";
       final response = await dio.get(url);
       return response;
     } on DioError catch (e) {
-      debugPrint("Status Code : ${e.response!.statusCode.toString()}");
+      debugPrint("Status Code $e");
     }
   }
 }

@@ -7,9 +7,6 @@ class ErrorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Music App"),
-      ),
       body: Center(
         child: Text(errorMessage),
       ),
