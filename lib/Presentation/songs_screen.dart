@@ -11,10 +11,6 @@ class SongsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Music App"),
-        backgroundColor: Colors.teal.withOpacity(0.5),
-      ),
       body: BlocBuilder<SongBloc, SongState>(
         builder: (context, state) {
           if (state is SongLoadingState)
