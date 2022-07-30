@@ -11,4 +11,4 @@ jobs:
       - run: flutter pub get
       - run: flutter build apk --release
       - store_artifacts:
-          path: build/app/ouputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
