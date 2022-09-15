@@ -3,9 +3,10 @@
 version: 2.1
 jobs:
   build:
-    branches:
-      only:
-        circleci-project-setup
+    filters:
+      branches:
+        only:
+          - circleci-project-setup
     docker:
       - image: cirrusci/flutter
     steps:
