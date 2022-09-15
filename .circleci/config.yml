@@ -5,8 +5,7 @@ jobs:
   build:
     filters:
       branches:
-        only:
-          - circleci-project-setup
+        only: circleci-project-setup
     docker:
       - image: cirrusci/flutter
     steps:
