@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:music_app/controllers/song_controller.dart';
+import 'package:music_app/controllers/song_details_controller.dart';
+import 'package:music_app/router/routes_name.dart';
 
 class SongsScreen extends GetView<SongController> {
   const SongsScreen({Key? key}) : super(key: key);
@@ -27,7 +30,16 @@ class SongsScreen extends GetView<SongController> {
                           Text("From ${controller.songs[index].albumName}"),
                       // trailing: Text("By ${controller.songs[index].artistName}"),
                       leading: Image.asset("assets/images/music.png"),
-                      onTap: () {},
+                      onTap: () {
+                        Get.lazyPut<SongDetailsController>(
+                            () => SongDetailsController());
+                        Get.find<SongDetailsController>().setId =
+                            controller.songs[index].songId;
+                        Get.toNamed(
+                          RoutesName.songDetailsScreen,
+                          arguments: controller.songs[index].songId,
+                        );
+                      },
                     );
                   },
                 );

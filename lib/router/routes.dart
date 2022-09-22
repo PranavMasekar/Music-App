@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:music_app/bindings/home_binding.dart';
 import 'package:music_app/bindings/song_bindings.dart';
+import 'package:music_app/bindings/song_details_bindings.dart';
 import 'package:music_app/router/routes_name.dart';
 import 'package:music_app/view/errorpage.dart';
 import 'package:music_app/view/home.dart';
@@ -28,6 +29,7 @@ class AppRoutes {
       name: RoutesName.songDetailsScreen,
       arguments: int,
       page: () => SongDetails(id: Get.arguments),
+      // binding: SongDetailsBinding(),
     ),
   ];
 }

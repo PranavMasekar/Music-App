@@ -8,7 +8,7 @@ class SongService {
     dio = Dio();
   }
 
-  Future getSongs({
+  Future<void> getSongs({
     Function()? beforeSend,
     Function(Map<String, dynamic>)? onSuccess,
     Function(DioError error)? onError,
@@ -28,7 +28,7 @@ class SongService {
     );
   }
 
-  void getSongById({
+  Future<void> getSongById({
     required int id,
     Function()? beforeSend,
     Function(Map<String, dynamic>)? onSuccess,
@@ -49,7 +49,7 @@ class SongService {
     );
   }
 
-  void getSongLyrics({
+  Future<void> getSongLyrics({
     required int id,
     Function()? beforeSend,
     Function(Map<String, dynamic>)? onSuccess,

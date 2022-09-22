@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
@@ -22,21 +23,22 @@ class HomeController extends GetxController {
   }
 
   _updateState(ConnectivityResult result) {
+    log("changing connection state");
     switch (result) {
       case ConnectivityResult.wifi:
         connectionType.value = 1;
         update();
-        Get.toNamed(RoutesName.songScreen);
+        Get.offAllNamed(RoutesName.songScreen);
         break;
       case ConnectivityResult.mobile:
         connectionType.value = 2;
         update();
-        Get.toNamed(RoutesName.songScreen);
+        Get.offAllNamed(RoutesName.songScreen);
         break;
       case ConnectivityResult.none:
         connectionType.value = 0;
         update();
-        Get.toNamed(
+        Get.offAllNamed(
           RoutesName.errorScreen,
           arguments: "No Internet Connection",
         );
@@ -54,8 +56,9 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onClose() {
-    subscription?.cancel();
-  }
+  // @override
+  // void onClose() {
+  //   subscription?.cancel();
+  //   super.onClose();
+  // }
 }
