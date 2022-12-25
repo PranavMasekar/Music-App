@@ -35,12 +35,12 @@ class SongDetails extends StatelessWidget {
                 style: TextStyle(fontSize: 18),
               ),
               SizedBox(height: 20),
-              Text(
-                "state.lyric!.lyrics".substring(
-                  0,
-                  "state.lyric!.lyrics".indexOf("***"),
-                ),
-              ),
+              Text("asdf"
+                  // "state.lyric!.lyrics".substring(
+                  //   0,
+                  //   "state.lyric!.lyrics".indexOf("***"),
+                  // ),
+                  ),
             ],
           ),
         ),
