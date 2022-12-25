@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -30,7 +31,6 @@ class HomeScreen extends ConsumerWidget {
                   isThreeLine: false,
                   title: Text(song.songName),
                   subtitle: Text("From ${song.albumName}"),
-                  trailing: Text("By ${song.artistName}"),
                   leading: Image.asset("assets/images/music.png"),
                   onTap: () {
                     context.goNamed(

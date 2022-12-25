@@ -27,6 +27,7 @@ class HomeController extends StateNotifier<bool> {
         context.goNamed(RouteNames.error, queryParams: {"errorMsg": l});
       },
       (r) {
+        allSongs.clear();
         Map<String, dynamic> res = jsonDecode(r.data);
         for (var element in res["message"]["body"]["track_list"]) {
           allSongs.add(Song.fromJson(element["track"]));
