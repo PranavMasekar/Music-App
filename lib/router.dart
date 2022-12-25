@@ -4,14 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:music_app/route_names.dart';
 import 'package:music_app/view/home.dart';
+import 'package:music_app/view/initial.dart';
 import 'package:music_app/view/song_details_page.dart';
 
 import 'view/errorpage.dart';
 
 class AppRouter {
   GoRouter router = GoRouter(
-    initialLocation: "/song",
+    initialLocation: "/",
     routes: [
+      GoRoute(
+        name: RouteNames.inital,
+        path: '/',
+        pageBuilder: (context, state) {
+          return MaterialPage(child: InitialScreen());
+        },
+      ),
       GoRoute(
         name: RouteNames.home,
         path: '/song',

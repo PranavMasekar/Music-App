@@ -20,8 +20,7 @@ class SongService {
       else
         throw "Something went wrong";
     } on DioError catch (e) {
-      debugPrint("Status Code : ${e.response!.statusCode.toString()}");
-      return left(e.toString());
+      return left("");
     } catch (e) {
       return left(e.toString());
     }
