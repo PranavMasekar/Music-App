@@ -1,12 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:music_app/common/loader.dart';
-import 'package:music_app/controllers/connectivity_controller.dart';
 import 'package:music_app/controllers/home_controller.dart';
+import 'package:music_app/locator.dart';
 import 'package:music_app/models/song_model.dart';
 import 'package:music_app/route_names.dart';
-import 'package:music_app/view/errorpage.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -22,12 +23,9 @@ class HomeScreen extends ConsumerWidget {
         body: ref.watch(homeControllerProvider)
             ? Loader()
             : ListView.builder(
-                itemCount:
-                    ref.watch(homeControllerProvider.notifier).allSongs.length,
+                itemCount: locator.get<HomeController>().allSongs.length,
                 itemBuilder: (context, index) {
-                  Song song = ref
-                      .watch(homeControllerProvider.notifier)
-                      .allSongs[index];
+                  Song song = locator.get<HomeController>().allSongs[index];
                   return ListTile(
                     style: ListTileStyle.drawer,
                     isThreeLine: false,
@@ -35,6 +33,11 @@ class HomeScreen extends ConsumerWidget {
                     subtitle: Text("From ${song.albumName}"),
                     leading: Image.asset("assets/images/music.png"),
                     onTap: () {
+                      log(locator
+                          .get<HomeController>()
+                          .allSongs
+                          .length
+                          .toString());
                       context.goNamed(
                         RouteNames.songDetail,
                         params: {

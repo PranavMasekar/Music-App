@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -9,14 +10,16 @@ import 'package:music_app/services/song_service.dart';
 
 final homeControllerProvider =
     StateNotifierProvider<HomeController, bool>((ref) {
-  return locator.get<HomeController>();
+  return locator<HomeController>();
 });
 
 class HomeController extends StateNotifier<bool> {
   final SongService _service;
   HomeController({required SongService songService})
       : _service = songService,
-        super(true);
+        super(true) {
+    log("Instance created");
+  }
   List<Song> allSongs = [];
 
   Future loadSongs(BuildContext context) async {

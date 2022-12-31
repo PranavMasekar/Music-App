@@ -9,9 +9,7 @@ void setUpLocator() {
   //! SINGLETON
   locator.registerSingleton<SongService>(SongService());
   locator.registerLazySingleton<AppRouter>(() => AppRouter());
-
-  //! FACTORY
-  locator.registerFactory<HomeController>(
-    () => HomeController(songService: locator.get<SongService>()),
+  locator.registerSingleton<HomeController>(
+    HomeController(songService: locator.get<SongService>()),
   );
 }
