@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_app/Models/song_model.dart';
 import 'package:music_app/Presentation/errorpage.dart';
 import 'package:music_app/Presentation/song_details_page.dart';
+import 'package:music_app/Repository/song_repository.dart';
 
 import '../BLoC/song bloc/song_bloc.dart';
 
@@ -17,22 +19,20 @@ class SongsScreen extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           if (state is SongLoadedState) {
             return ListView.builder(
-              itemCount: state.songs.length,
+              itemCount: context.read<SongRepository>().songs.length,
               itemBuilder: (context, index) {
+                Song song = context.read<SongRepository>().songs[index];
                 return ListTile(
                   style: ListTileStyle.drawer,
                   isThreeLine: false,
-                  title: Text(state.songs[index].songName),
-                  subtitle: Text("From ${state.songs[index].albumName}"),
-                  trailing: Text("By ${state.songs[index].artistName}"),
+                  title: Text(song.songName),
+                  subtitle: Text("From ${song.albumName}"),
                   leading: Image.asset("assets/images/music.png"),
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: ((context) =>
-                            SongDetails(id: state.songs[index].songId)),
-                      ),
+                          builder: (context) => SongDetails(id: song.songId)),
                     );
                   },
                 );
