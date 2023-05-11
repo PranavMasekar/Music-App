@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:music_app/Presentation/errorpage.dart';
+import 'package:music_app/core/bloc/connectivity%20bloc/connection_bloc.dart';
+import 'package:music_app/core/pages/errorpage.dart';
 
-import '../BLoC/connectivity bloc/connection_bloc.dart';
 import '../BLoC/song details bloc/song_details_bloc.dart';
 import '../Models/lyrics_model.dart';
 import '../Models/song_model.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:music_app/Presentation/errorpage.dart';
+import 'package:music_app/core/pages/errorpage.dart';
 import 'package:music_app/Presentation/song_details_page.dart';
 
 import '../BLoC/song bloc/song_bloc.dart';
