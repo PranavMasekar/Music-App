@@ -6,4 +6,5 @@ import 'package:music_app/features/songs/domain/entities/song_entity.dart';
 abstract class SongRepository {
   Future<Either<Failure, List<Song>>> getSongs();
   Future<Either<Failure, Lyrics>> getLyrics(int id);
+  Future<Either<Failure, Song>> getSong(int id);
 }

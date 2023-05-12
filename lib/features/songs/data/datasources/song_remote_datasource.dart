@@ -8,6 +8,7 @@ import 'package:music_app/features/songs/data/models/song_model.dart';
 abstract class SongRemoteDataSource {
   Future<LyricsModel> getLyrics(int id);
   Future<List<SongModel>> getSongs();
+  Future<SongModel> getSong(int id);
 }
 
 class SongRemoteDataSourceImplementation extends SongRemoteDataSource {
@@ -43,6 +44,21 @@ class SongRemoteDataSourceImplementation extends SongRemoteDataSource {
         songs.add(SongModel.fromJson(element["track"]));
       }
       return songs;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<SongModel> getSong(int id) async {
+    String url =
+        "https://api.musixmatch.com/ws/1.1/track.get?track_id=$id&apikey=8dbbbf65ba63d8e5278851222fc09948";
+
+    final response = await dio.get(url);
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> res = jsonDecode(response.data);
+      return SongModel.fromJson(res["message"]["body"]["track"]);
     } else {
       throw ServerException();
     }

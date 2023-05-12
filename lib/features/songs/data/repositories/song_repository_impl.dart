@@ -43,4 +43,18 @@ class SongRepositoryImplementation extends SongRepository {
       return left(NoInternetConnectionFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, Song>> getSong(int id) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final song = await remoteDataSource.getSong(id);
+        return right(song);
+      } on ServerException {
+        return left(ServerFailure());
+      }
+    } else {
+      return left(NoInternetConnectionFailure());
+    }
+  }
 }
