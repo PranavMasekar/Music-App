@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:music_app/core/error/failure.dart';
+import 'package:music_app/core/repositories/song_storage.dart';
 import 'package:music_app/core/usecases/usecase.dart';
 import 'package:music_app/features/songs/domain/entities/lyrics_entity.dart';
 import 'package:music_app/features/songs/domain/entities/song_entity.dart';
@@ -15,10 +16,12 @@ class SongBloc extends Bloc<SongEvent, SongState> {
   final GetLyricsUseCase getLyrics;
   final GetSongsUseCase getSongs;
   final GetSongUseCase getSong;
+  final SongStorageRepository songStorageRepository;
   SongBloc({
     required this.getLyrics,
     required this.getSongs,
     required this.getSong,
+    required this.songStorageRepository,
   }) : super(SongLoadingState()) {
     on<GetSongs>(_getSongs);
     on<GetDetails>(_getDetails);
@@ -44,7 +47,10 @@ class SongBloc extends Bloc<SongEvent, SongState> {
       (failure) => emit(
         SongLoadingFailure(errorMsg: getStringByFailure(failure)),
       ),
-      (songs) => emit(SongsLoadedState(songs: songs)),
+      (songs) {
+        songStorageRepository.setCurrentSongs(songs);
+        emit(SongsLoadedState(songs: songs));
+      },
     );
   }
 
@@ -55,19 +61,25 @@ class SongBloc extends Bloc<SongEvent, SongState> {
 
     final songResult = await getSong.call(SongParams(id: event.id));
     songResult.fold(
-      (failure) =>
-          emit(SongLoadingFailure(errorMsg: getStringByFailure(failure))),
+      (failure) {
+        emit(SongLoadingFailure(errorMsg: getStringByFailure(failure)));
+        return;
+      },
       (s) => song = s,
     );
 
     final lyricResult = await getLyrics(Params(id: event.id));
     lyricResult.fold(
-      (failure) =>
-          emit(SongLoadingFailure(errorMsg: getStringByFailure(failure))),
+      (failure) {
+        emit(SongLoadingFailure(errorMsg: getStringByFailure(failure)));
+        return;
+      },
       (l) => lyrics = l,
     );
 
     if (song != null && lyrics != null) {
+      songStorageRepository.setCurrentLyrics(lyrics!);
+      songStorageRepository.setCurrentSong(song!);
       emit(SongDetailsLoadedState(song: song!, lyric: lyrics!));
     } else {
       emit(SongLoadingFailure(errorMsg: "Unexpected Error"));

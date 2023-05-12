@@ -1,8 +1,10 @@
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:music_app/core/network/network_info.dart';
+import 'package:music_app/core/repositories/song_storage.dart';
 import 'package:music_app/features/songs/data/datasources/song_remote_datasource.dart';
 import 'package:music_app/features/songs/data/repositories/song_repository_impl.dart';
+import 'package:music_app/features/songs/domain/repositories/song_repository.dart';
 import 'package:music_app/features/songs/domain/usecases/get_lyrics.dart';
 import 'package:music_app/features/songs/domain/usecases/get_song.dart';
 import 'package:music_app/features/songs/domain/usecases/get_songs.dart';
@@ -17,6 +19,7 @@ Future<void> init() async {
       getLyrics: locator(),
       getSongs: locator(),
       getSong: locator(),
+      songStorageRepository: locator(),
     ),
   );
 
@@ -32,7 +35,7 @@ Future<void> init() async {
   );
 
   //! Repositories
-  locator.registerLazySingleton(
+  locator.registerLazySingleton<SongRepository>(
     () => SongRepositoryImplementation(
       networkInfo: locator(),
       remoteDataSource: locator(),
@@ -40,11 +43,18 @@ Future<void> init() async {
   );
 
   //! Data Source
-  locator.registerLazySingleton(() => SongRemoteDataSourceImplementation());
+  locator.registerLazySingleton<SongRemoteDataSource>(
+    () => SongRemoteDataSourceImplementation(),
+  );
 
   //! Core
-  locator.registerLazySingleton(() => NetworkInfoImpl(connectivity: locator()));
+  locator.registerLazySingleton<NetworkInfo>(
+    () => NetworkInfoImpl(connectivity: locator()),
+  );
 
   //! External Libraries
   locator.registerLazySingleton(() => Connectivity());
+
+  //! Storage
+  locator.registerLazySingleton(() => SongStorageRepository());
 }
