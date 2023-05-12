@@ -15,3 +15,7 @@ class ServerFailure extends Failure {
 class CacheFailure extends Failure {
   const CacheFailure();
 }
+
+class NoInternetConnectionFailure extends Failure {
+  const NoInternetConnectionFailure();
+}
