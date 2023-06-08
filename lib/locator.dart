@@ -1,9 +1,11 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_app/core/network/network_info.dart';
 import 'package:music_app/core/repositories/song_storage.dart';
 import 'package:music_app/features/songs/data/datasources/song_remote_datasource.dart';
 import 'package:music_app/features/songs/data/repositories/song_repository_impl.dart';
+import 'package:music_app/features/songs/domain/entities/song_entity.dart';
 import 'package:music_app/features/songs/domain/repositories/song_repository.dart';
 import 'package:music_app/features/songs/domain/usecases/get_lyrics.dart';
 import 'package:music_app/features/songs/domain/usecases/get_song.dart';
@@ -34,11 +36,13 @@ Future<void> init() async {
     () => GetSongUseCase(songRepository: locator()),
   );
 
+  var box = await Hive.openBox<Song>('songs');
   //! Repositories
   locator.registerLazySingleton<SongRepository>(
     () => SongRepositoryImplementation(
       networkInfo: locator(),
       remoteDataSource: locator(),
+      box: box,
     ),
   );
 
