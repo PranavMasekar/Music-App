@@ -21,13 +21,13 @@ class SongDetails extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ref.watch(songAndLyricProvider(id)).when(
+              ref.watch(songProvider(id)).when(
                     data: (data) {
                       return Column(
                         children: [
                           Image.asset("assets/images/play.jpg"),
                           Text(
-                            data!.songName,
+                            data.songName,
                             style: TextStyle(fontSize: 24),
                           ),
                           Text(
@@ -40,6 +40,24 @@ class SongDetails extends ConsumerWidget {
                             style: TextStyle(fontSize: 18),
                           ),
                           SizedBox(height: 20),
+                          ref.watch(lyricProvider(id)).when(
+                            data: (data) {
+                              if (data == null) {
+                                return Text("NO LYRICS");
+                              } else {
+                                return Text(
+                                  data.lyrics
+                                      .substring(data.lyrics.indexOf("***")),
+                                );
+                              }
+                            },
+                            error: (error, stackTrace) {
+                              return Text("NO LYRICS");
+                            },
+                            loading: () {
+                              return Loader();
+                            },
+                          ),
                         ],
                       );
                     },
@@ -48,14 +66,6 @@ class SongDetails extends ConsumerWidget {
                     },
                     loading: () => SizedBox(height: 700, child: Loader()),
                   ),
-              Text(
-                ref.watch(lyricProvider) == null
-                    ? "NO LYRICS"
-                    : ref.watch(lyricProvider)!.lyrics.substring(
-                          0,
-                          ref.read(lyricProvider)!.lyrics.indexOf("***"),
-                        ),
-              ),
             ],
           ),
         ),
