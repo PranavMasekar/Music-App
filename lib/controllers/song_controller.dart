@@ -2,18 +2,21 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:music_app/locator.dart';
 import 'package:music_app/models/lyrics_model.dart';
 import 'package:music_app/models/song_model.dart';
 import 'package:music_app/services/song_service.dart';
 
 final songProvider = FutureProvider.family((ref, int id) async {
-  return await locator<SongController>().getSongByID(id);
+  return await ref.read(songControllerProvider).getSongByID(id);
 });
 
 final lyricProvider = FutureProvider.family((ref, int id) async {
-  return await locator<SongController>().getLyricsByID(id);
+  return await ref.read(songControllerProvider).getLyricsByID(id);
 });
+
+final songControllerProvider = Provider(
+  (ref) => SongController(songService: SongService()),
+);
 
 class SongController {
   final SongService _service;

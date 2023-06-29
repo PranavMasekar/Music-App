@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:music_app/locator.dart';
 import 'package:music_app/models/song_model.dart';
 import 'package:music_app/services/song_service.dart';
 
 final songsProvider = FutureProvider((ref) async {
-  return await locator<HomeController>().loadSongs();
+  return await ref.read(homeControllerProvider).loadSongs();
 });
+
+final homeControllerProvider = Provider(
+  (ref) => HomeController(songService: SongService()),
+);
 
 class HomeController {
   final SongService _service;
