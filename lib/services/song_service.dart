@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:music_app/common/typedef.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class SongService {
   late Dio dio;
@@ -19,10 +19,12 @@ class SongService {
         return right(response);
       else
         throw "Something went wrong";
-    } on DioError catch (e) {
-      return left("");
-    } catch (e) {
-      return left(e.toString());
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(
+        exception,
+        stackTrace: stackTrace,
+      );
+      return left(exception.toString());
     }
   }
 
@@ -32,11 +34,12 @@ class SongService {
           "https://api.musixmatch.com/ws/1.1/track.get?track_id=$id&apikey=8dbbbf65ba63d8e5278851222fc09948";
       final response = await dio.get(url);
       return right(response);
-    } on DioError catch (e) {
-      debugPrint("Status Code : ${e.response!.statusCode.toString()}");
-      return left(e.toString());
-    } catch (e) {
-      return left(e.toString());
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(
+        exception,
+        stackTrace: stackTrace,
+      );
+      return left(exception.toString());
     }
   }
 
@@ -46,11 +49,12 @@ class SongService {
           "https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=$id&apikey=8dbbbf65ba63d8e5278851222fc09948";
       final response = await dio.get(url);
       return right(response);
-    } on DioError catch (e) {
-      debugPrint("Status Code $e");
-      return left(e.toString());
-    } catch (e) {
-      return left(e.toString());
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(
+        exception,
+        stackTrace: stackTrace,
+      );
+      return left(exception.toString());
     }
   }
 }
